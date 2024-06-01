@@ -1,20 +1,26 @@
 import { nanoid } from 'nanoid';
 import css from './ContactForm.module.css'
 import { useDispatch, useSelector } from 'react-redux';
-import { getContacts } from "../../redux/selectors";
-import { addContact } from '../../redux/contactsSlice';
+import { selectContacts } from "../../redux/selectors";
+import { addContact } from '../../redux/operations';
 
 
 export const ContactForm = () => {
     const dispatch = useDispatch();
-    const contacts = useSelector(getContacts);
+    const contacts = useSelector(selectContacts);
+
+    const resetForm = () => {
+        document.getElementById("nameId").value = '';
+        document.getElementById("numberId").value = '';
+
+    }
 
 
     //add new contact after submit
     const onSubmit = (e) => {
         e.preventDefault();
         const name = e.target.elements.name.value;
-        const number = e.target.elements.number.value;
+        const phone = e.target.elements.number.value;
 
         // Do not add duplicated contact
         const duplicatedContact = contacts.some(
@@ -22,17 +28,18 @@ export const ContactForm = () => {
         );
 
         if (duplicatedContact) {
-        alert(`${name} is already in contacts.`);
+            alert(`${name} is already in contacts.`);
+            resetForm();
         return;
         }
 
         //Add new contact 
-        const newContact = { id: nanoid(), name, number };
+        const newContact = { id: nanoid(), name, phone };
         dispatch(addContact(newContact));
+        console.log(newContact)
 
-        document.getElementById("nameId").value = '';
-        document.getElementById("numberId").value = '';
- 
+        resetForm();
+
     };
     
     return (
