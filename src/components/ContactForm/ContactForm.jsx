@@ -36,8 +36,6 @@ export const ContactForm = () => {
         //Add new contact 
         const newContact = { id: nanoid(), name, phone };
         dispatch(addContact(newContact));
-        console.log(newContact)
-
         resetForm();
 
     };

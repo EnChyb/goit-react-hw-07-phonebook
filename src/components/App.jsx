@@ -25,6 +25,7 @@ export const App = () => {
       <h2 className={css.component}>Contacts</h2>
       <Filter />
       {isLoading && !error && <b>Loading...</b>}
+      {error&&<h1>Oops! Something went wrong! Please try again.</h1>}
       <ContactList/>
     </div>
   )
